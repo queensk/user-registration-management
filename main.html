@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="nav.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="user-data.css" />
+    <title>user registration management</title>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <h1>User Management</h1>
+      </div>
+      <div class="nav-items">
+        <span>users</span>
+        <span>names</span>
+        <span>id</span>
+        <span>number</span>
+        <span>country</span>
+      </div>
+      <div class="buttons_nav">
+        <button onclick="deleteUser()">Register</button>
+        <button>Login</button>
+      </div>
+    </nav>
+    <div class="user-content">
+      <div id="user-data"></div>
+      <form action="" id="add-user-form">
+        <label for="name">
+          Name:
+          <input type="text" id="name" />
+        </label>
+        <label for="id">
+          id:
+          <input type="text" id="id" />
+        </label>
+        <label for="number">
+          number:
+          <input type="text" id="number" />
+        </label>
+        <label for="country">
+          country:
+          <input type="text" id="country" />
+        </label>
+        <button>Add User</button>
+      </form>
+    </div>
+  </body>
+</html>
