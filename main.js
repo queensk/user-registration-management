@@ -93,22 +93,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function editUser(user) {
-    const userInfo = users[user];
-    console.log(user);
+    const userInfo = user
+    console.log(userInfo["name"])
 
     const nameInput = document.getElementById("name");
     const idInput = document.getElementById("id");
     const numberInput = document.getElementById("number");
     const countryInput = document.getElementById("country");
 
-    nameInput.value = userInfo.name;
-    idInput.value = userInfo.id;
-    numberInput.value = userInfo.number;
-    countryInput.value = userInfo.country;
+    nameInput.value = userInfo["name"];
+    idInput.value = userInfo["id"];
+    numberInput.value = userInfo["number"];
+    countryInput.value = userInfo["country"];
 
     const existingUserElement = document.querySelector(
       `.user[data-user="${user}"]`
     );
+
     if (existingUserElement) {
       existingUserElement.remove();
     }
