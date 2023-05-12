@@ -3,9 +3,7 @@ nav {
   align-items: center;
   margin: 1%;
   padding: 1%;
-  /* background-color: red; */
   border-radius: 5px;
-  /* color: #fff; */
   justify-content: space-between;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
 }
@@ -15,12 +13,9 @@ nav {
   justify-content: space-between;
   cursor: pointer;
   width: 30%;
-  /* font-size: 30px; */
-  /* font-weight: 200; */
 }
 .nav-items span {
   padding: 1%;
-  /* min-width: 10px; */
 }
 .nav-items span:hover {
   background-color: #c80020;
@@ -38,13 +33,44 @@ nav {
 .buttons_nav button {
   background-color: green;
   color: #fff;
-  font-size: 19px;
+  font-size: 16px;
   border-radius: 5px;
-  padding: 3%;
+  padding: 4%;
   cursor: pointer;
   margin: 0 2%;
+}
+.buttons_nav button a{
+  text-decoration: none;
+  color: #fff;
 }
 .buttons_nav button:hover {
   background-color: red;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+}
+@media (max-width: 767px) {
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 2%;
+  }
+
+  .nav-items {
+    width: 100%;
+    margin-bottom: 2%;
+  }
+
+  .nav-items span {
+    width: 100%;
+    text-align: center;
+    padding: 2% 0;
+  }
+
+  .buttons_nav {
+    width: 100%;
+    margin-top: 2%;
+  }
+
+  .buttons_nav button {
+    width: 100%;
+  }
 }
