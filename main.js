@@ -16,45 +16,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const addUserForm = document.getElementById("add-user-form");
 
   function createUser(user) {
-    if (!user) {
-      console.log("No user");
+    if (isUserExists(user)) {
+      return;
     }
+
     const userInfo = users[user];
     const userElement = document.createElement("div");
     userElement.classList.add("user");
+    userElement.setAttribute("data-user", user);
 
-    const nameSpan = document.createElement("span");
-    nameSpan.textContent = `Name: ${userInfo.name}`;
+    const nameSpan = createSpan(`Name: ${userInfo.name}`);
+    const idSpan = createSpan(`ID: ${userInfo.id}`);
+    const numberSpan = createSpan(`Number: ${userInfo.number}`);
+    const countrySpan = createSpan(`Country: ${userInfo.country}`);
+    const editButton = createButton("Edit", () => editUser(userInfo));
+    const deleteButton = createButton("Delete", () => deleteUser(user));
+
     userElement.appendChild(nameSpan);
-
-    const idSpan = document.createElement("span");
-    idSpan.textContent = `ID: ${userInfo.id}`;
     userElement.appendChild(idSpan);
-
-    const numberSpan = document.createElement("span");
-    numberSpan.textContent = `Number: ${userInfo.number}`;
     userElement.appendChild(numberSpan);
-
-    const countrySpan = document.createElement("span");
-    countrySpan.textContent = `Country: ${userInfo.country}`;
     userElement.appendChild(countrySpan);
-
-    const editButton = document.createElement("button");
-    editButton.textContent = "Edit";
-    editButton.addEventListener("click", () => {
-      editUser(userInfo);
-    });
     userElement.appendChild(editButton);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", () => {
-      deleteUser(user);
-    });
-
     userElement.appendChild(deleteButton);
 
     userList.appendChild(userElement);
+  }
+
+  function createSpan(text) {
+    const span = document.createElement("span");
+    span.textContent = text;
+    return span;
+  }
+
+  function createButton(text, onClick) {
+    const button = document.createElement("button");
+    button.textContent = text;
+    button.addEventListener("click", onClick);
+    return button;
   }
 
   function addUser(event) {
@@ -71,9 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
       country: countryInput.value,
     };
 
+    if (!newUser.name || !newUser.id || !newUser.number || !newUser.country) {
+      console.log("Please fill in all fields");
+      return;
+    }
+
+    if (isUserExists(newUser)) {
+      console.log("User already exists");
+      return;
+    }
     const newUserKey = `user${Object.keys(users).length + 1}`;
     users[newUserKey] = newUser;
 
+    console.log(newUserKey);
     createUser(newUserKey);
 
     nameInput.value = "";
@@ -93,18 +101,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function editUser(user) {
-    const userInfo = user
-    console.log(userInfo["name"])
+    const userInfo = users[user];
 
     const nameInput = document.getElementById("name");
     const idInput = document.getElementById("id");
     const numberInput = document.getElementById("number");
     const countryInput = document.getElementById("country");
 
-    nameInput.value = userInfo["name"];
-    idInput.value = userInfo["id"];
-    numberInput.value = userInfo["number"];
-    countryInput.value = userInfo["country"];
+    nameInput.value = user.name;
+    idInput.value = user.id;
+    numberInput.value = user.number;
+    countryInput.value = user.country;
 
     const existingUserElement = document.querySelector(
       `.user[data-user="${user}"]`
@@ -115,6 +122,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createUser(user);
+  }
+
+  function deleteUser(user) {
+    delete users[user];
+    userList.innerHTML = "";
+
+    for (let user in users) {
+      createUser(user);
+    }
+  }
+
+  function isUserExists(user) {
+    for (let existingUser in users) {
+      if (
+        users[existingUser].name === user.name &&
+        users[existingUser].id === user.id &&
+        users[existingUser].number === user.number &&
+        users[existingUser].country === user.country
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   for (let user in users) {
