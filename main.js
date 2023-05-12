@@ -29,7 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const idSpan = createSpan(`ID: ${userInfo.id}`);
     const numberSpan = createSpan(`Number: ${userInfo.number}`);
     const countrySpan = createSpan(`Country: ${userInfo.country}`);
-    const editButton = createButton("Edit", () => editUser(userInfo));
+    const editButton = createButton(
+      "Edit",
+      () => editUser(userInfo),
+      "#add-user-form"
+    );
     const deleteButton = createButton("Delete", () => deleteUser(user));
 
     userElement.appendChild(nameSpan);
@@ -48,10 +52,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return span;
   }
 
-  function createButton(text, onClick) {
+  function createButton(text, onClick, link) {
     const button = document.createElement("button");
     button.textContent = text;
     button.addEventListener("click", onClick);
+
+    if (link) {
+      const anchor = document.createElement("a");
+      anchor.href = link;
+      anchor.appendChild(button);
+      return anchor;
+    }
+
     return button;
   }
 
@@ -101,8 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function editUser(user) {
-    const userInfo = users[user];
-
     const nameInput = document.getElementById("name");
     const idInput = document.getElementById("id");
     const numberInput = document.getElementById("number");
@@ -122,15 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createUser(user);
-  }
-
-  function deleteUser(user) {
-    delete users[user];
-    userList.innerHTML = "";
-
-    for (let user in users) {
-      createUser(user);
-    }
   }
 
   function isUserExists(user) {
