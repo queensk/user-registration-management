@@ -1,14 +1,107 @@
 .user-content {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: green;
-  height: 90vh;
   width: auto;
 }
-.user-data {
-  display: flex;
-  background-color: green;
+
+label {
+  align-items: center;
+  gap: 5px;
+  padding: 3%;
+}
+
+input[type="text"] {
+  padding: 5%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   width: 100%;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.user {
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+}
+
+form {
+  margin: 1%;
+  padding: 2%;
+  display: grid;
+  grid-template-columns: auto auto;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 70%;
+  align-items: center;
+  background-color: #f5f5f5;
+  flex-wrap: nowrap;
+}
+form button {
+  grid-column: span 2;
+  font-weight: 500;
+  font-size: 20px;
+  padding: 2%;
+}
+
+.user span {
+  display: block;
+  margin: 1%;
+}
+.user:hover {
+  background-color: #dddada;
+  box-shadow: 0px 0.5px 2px 1px rgba(0, 0, 0, 0.75);
+}
+
+.user button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.user button:hover {
+  background-color: #45a049;
+}
+@media (max-width: 767px) {
+  .user-content {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 1%;
+  }
+  .user {
+    display: block;
+  }
+  form{
+    display: block;
+    width: 90%;
+  }
+  input[type="text"] {
+    width: 90%;
+  }
+  label input{
+    padding: 1%;
+  }
 }
