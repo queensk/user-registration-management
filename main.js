@@ -1,16 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const users = {
-    user1: { name: "queens", id: "1", number: "123456789", country: "USA" },
-    user2: { name: "jordan", id: "2", number: "123456789", country: "USA" },
-    user3: { name: "kobe", id: "3", number: "123456789", country: "USA" },
-    user4: { name: "james", id: "4", number: "123456789", country: "USA" },
-    user5: { name: "jordan", id: "5", number: "123456789", country: "USA" },
-    user6: { name: "kobe", id: "6", number: "123456789", country: "USA" },
-    user7: { name: "james", id: "7", number: "123456789", country: "USA" },
-    user8: { name: "jordan", id: "8", number: "123456789", country: "USA" },
-    user9: { name: "kobe", id: "9", number: "123456789", country: "USA" },
-    user10: { name: "james", id: "10", number: "123456789", country: "USA" },
-  };
+  let users = JSON.parse(localStorage.getItem("users"));
+
+  if (!users) {
+    users = {
+      user1: { name: "queens", id: "1", number: "123456789", country: "USA" },
+      user2: { name: "jordan", id: "2", number: "123456789", country: "USA" },
+      user3: { name: "kobe", id: "3", number: "123456789", country: "USA" },
+      user4: { name: "james", id: "4", number: "123456789", country: "USA" },
+      user5: { name: "jordan", id: "5", number: "123456789", country: "USA" },
+      user6: { name: "kobe", id: "6", number: "123456789", country: "USA" },
+      user7: { name: "james", id: "7", number: "123456789", country: "USA" },
+      user8: { name: "jordan", id: "8", number: "123456789", country: "USA" },
+      user9: { name: "kobe", id: "9", number: "123456789", country: "USA" },
+      user10: { name: "james", id: "10", number: "123456789", country: "USA" },
+    };
+    localStorage.setItem("users", JSON.stringify(users));
+  }
 
   const userList = document.getElementById("user-data");
   const addUserForm = document.getElementById("add-user-form");
@@ -90,10 +95,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("User already exists");
       return;
     }
+
     const newUserKey = `user${Object.keys(users).length + 1}`;
     users[newUserKey] = newUser;
 
-    console.log(newUserKey);
+    localStorage.setItem("users", JSON.stringify(users));
+
     createUser(newUserKey);
 
     nameInput.value = "";
@@ -106,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function deleteUser(user) {
     delete users[user];
+    localStorage.setItem("users", JSON.stringify(users));
+
     userList.innerHTML = "";
     for (let user in users) {
       createUser(user);
