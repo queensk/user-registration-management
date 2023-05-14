@@ -95,9 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const dataKey = dataKeyInput.value;
     if (dataKey) {
       users[dataKey] = newUser;
+      showPopup("User successfully updated!");
     } else {
       const newUserKey = `user${Object.keys(users).length + 1}`;
       users[newUserKey] = newUser;
+      showPopup("User successfully created!");
     }
 
     localStorage.setItem("users", JSON.stringify(users));
@@ -121,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("users", JSON.stringify(users));
 
     userList.innerHTML = "";
+    showPopup("User successfully deleted!");
     for (let user in users) {
       createUser(user);
     }
@@ -167,3 +170,21 @@ document.addEventListener("DOMContentLoaded", () => {
     createUser(user);
   }
 });
+
+function showPopup(message) {
+  const popupContainer = document.getElementById("popup-container");
+
+  const popupElement = document.createElement("div");
+  popupElement.classList.add("popup");
+
+  const messageElement = document.createElement("p");
+  messageElement.textContent = message;
+
+  popupElement.appendChild(messageElement);
+
+  popupContainer.appendChild(popupElement);
+
+  setTimeout(() => {
+    popupContainer.removeChild(popupElement);
+  }, 3000);
+}
