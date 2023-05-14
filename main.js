@@ -93,19 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const dataKey = dataKeyInput.value;
-    console.log(dataKey);
     if (dataKey) {
-      // Data key is present, update the existing user
       users[dataKey] = newUser;
     } else {
-      // Data key is empty, create a new user
       const newUserKey = `user${Object.keys(users).length + 1}`;
       users[newUserKey] = newUser;
     }
 
     localStorage.setItem("users", JSON.stringify(users));
 
-    userList.innerHTML = ""; // Clear the user list
+    userList.innerHTML = "";
     for (let user in users) {
       createUser(user);
     }
