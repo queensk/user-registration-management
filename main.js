@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countrySpan = createSpan(`Country: ${userInfo.country}`);
     const editButton = createButton(
       "Edit",
-      () => editUser(userInfo),
+      () => editUser(userInfo, user),
       "#add-user-form"
     );
     const deleteButton = createButton("Delete", () => deleteUser(user));
@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const idInput = document.getElementById("id");
     const numberInput = document.getElementById("number");
     const countryInput = document.getElementById("country");
+    const dataKeyInput = document.getElementById("data-key");
 
     const newUser = {
       name: nameInput.value,
@@ -91,22 +92,29 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (isUserExists(newUser)) {
-      console.log("User already exists");
-      return;
+    const dataKey = dataKeyInput.value;
+    console.log(dataKey);
+    if (dataKey) {
+      // Data key is present, update the existing user
+      users[dataKey] = newUser;
+    } else {
+      // Data key is empty, create a new user
+      const newUserKey = `user${Object.keys(users).length + 1}`;
+      users[newUserKey] = newUser;
     }
-
-    const newUserKey = `user${Object.keys(users).length + 1}`;
-    users[newUserKey] = newUser;
 
     localStorage.setItem("users", JSON.stringify(users));
 
-    createUser(newUserKey);
+    userList.innerHTML = ""; // Clear the user list
+    for (let user in users) {
+      createUser(user);
+    }
 
     nameInput.value = "";
     idInput.value = "";
     numberInput.value = "";
     countryInput.value = "";
+    dataKeyInput.value = "";
   }
 
   addUserForm.addEventListener("submit", addUser);
@@ -121,26 +129,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function editUser(user) {
+  function editUser(userInfo, dataKey) {
     const nameInput = document.getElementById("name");
     const idInput = document.getElementById("id");
     const numberInput = document.getElementById("number");
     const countryInput = document.getElementById("country");
+    const dataKeyInput = document.getElementById("data-key");
 
-    nameInput.value = user.name;
-    idInput.value = user.id;
-    numberInput.value = user.number;
-    countryInput.value = user.country;
+    nameInput.value = userInfo.name;
+    idInput.value = userInfo.id;
+    numberInput.value = userInfo.number;
+    countryInput.value = userInfo.country;
+    dataKeyInput.value = dataKey;
 
     const existingUserElement = document.querySelector(
-      `.user[data-user="${user}"]`
+      `.user[data-user="${userInfo}"]`
     );
 
     if (existingUserElement) {
       existingUserElement.remove();
     }
-
-    createUser(user);
   }
 
   function isUserExists(user) {
